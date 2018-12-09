@@ -19,8 +19,12 @@ do
                 then
                         echo "You selected Yes, Adding new user now"
                         useradd -s /bin/bash -m $user_name
-                        passwd $user_name
-                        echo "New User \"$user_name\" was added Successfully!"
+                        #passwd $user_name
+			echo "New User \"$user_name\" was added Successfully! Deploying public keys for ssh access..."
+                        mkdir /home/$user_name/.ssh
+                        cp ./public_keys/$user_name.pub /home/$user_name/.ssh/authorized_keys
+                        chown -R $user_name:$user_name /home/$user_name
+                        echo "Public keys uploaded successfully!"
                 else
                         echo "You selected no"
                 fi
